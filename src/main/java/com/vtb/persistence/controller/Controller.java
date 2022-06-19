@@ -7,14 +7,18 @@ import com.vtb.persistence.dto.ContentDto;
 import com.vtb.persistence.dto.FragmentDto;
 import com.vtb.persistence.dto.TableDto;
 import com.vtb.persistence.dto.ValueDto;
+import com.vtb.persistence.dto.VersionDto;
 import io.github.swagger2markup.adoc.AsciidocConverter;
 import io.github.swagger2markup.adoc.ast.impl.BlockImpl;
 import io.github.swagger2markup.adoc.ast.impl.DocumentImpl;
+import io.github.swagger2markup.adoc.ast.impl.SectionImpl;
 import io.github.swagger2markup.adoc.ast.impl.TableImpl;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
+import org.asciidoctor.ast.Section;
 import org.asciidoctor.ast.StructuralNode;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,51 +35,38 @@ public class Controller {
 
     StructuralNode parent = createArtifactBlock(artifactDto);
 
-    StructuralNode authorBlock = toAuthorBlock(parent, artifactDto.getAuthor());
-    parent.append(authorBlock);
-
     artifactDto.getFragments().stream()
         .map(fragment -> toFragmentBlock(parent, fragment))
         .forEach(parent::append);
 
     String asciidoc = converter.convert(parent, null, Collections.emptyMap());
-    System.out.println(asciidoc);
     return asciidoc;
   }
 
   private StructuralNode createArtifactBlock(ArtifactDto artifactDto) {
     var document = new DocumentImpl();
     document.setTitle(artifactDto.getTitle());
-    document.setAttribute("ID", artifactDto.getId(), true);
-    document.setAttribute("Тип артефакта", artifactDto.getType(), true);
+    document.setAttribute("id", artifactDto.getId(), true);
+    document.setAttribute("type", artifactDto.getType(), true);
     document.setAttribute("Дата и время создания артефакта", artifactDto.getCreatedAt(), true);
     document.setAttribute("Дата и время обновления артефакта", artifactDto.getUpdatedAt(), true);
     return document;
-  }
-
-  private StructuralNode toAuthorBlock(StructuralNode parent, AuthorDto author) {
-    var guid = "Уникальный идентификатор пользователя: " + author.getGuid();
-    var displayName = "ФИО: " + author.getDisplayName();
-    var avatar = "Идентификатор изображения: " + author.getAvatar();
-    var email = "Почтовый ящик: " + author.getEmail();
-    var position = "Должность: " + author.getPosition();
-
-    BlockImpl block = new BlockImpl(parent, "listing");
-    block.setTitle("Автор документа");
-    block.setLines(Arrays.asList(guid, displayName, avatar, email, position));
-    block.setAttribute("node_type", "artifact", true);
-
-    return block;
   }
 
   private StructuralNode toFragmentBlock(StructuralNode parent, FragmentDto fragment) {
     DocumentImpl block = new DocumentImpl(parent);
     block.setTitle(fragment.getTitle());
 
-    block.setAttribute("Идентификатор фрагмента", fragment.getId(), false);
-    block.setAttribute("Порядковый номер фрагмента", fragment.getOrder(), false);
-    block.setAttribute("Тип содержимого", fragment.getType(), false);
-    block.setAttribute("Источник данных", fragment.getSource(), false);
+    block.setAttribute("id", fragment.getId(), false);
+    block.setAttribute("order", fragment.getOrder(), false);
+    block.setAttribute("type", fragment.getType(), false);
+    block.setAttribute("source", fragment.getSource(), false);
+
+    VersionDto version = fragment.getVersion();
+    if (version != null) {
+      block.setAttribute("versionNumber", version.getNumber(), false);
+      block.setAttribute("versionTime", version.getDateTime(), false);
+    }
 
     if (fragment.getContent() != null) {
       var contentBlock = toContentBlock(block, fragment.getContent(), fragment.getType());

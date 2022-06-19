@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FragmentDto {
+
   private Long id;
   private String title;
   private String order;
@@ -18,4 +19,5 @@ public class FragmentDto {
   private String source;
   private ContentDto content;
   private List<FragmentDto> children;
+  private VersionDto version;
 }

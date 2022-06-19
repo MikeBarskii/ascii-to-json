@@ -58,6 +58,15 @@ public class JsonConverter extends AbstractConverter<JsonObject> {
     Map<String, Object> attributes = node.getAttributes();
     String nodeType = (String) attributes.get("node_type");
     if (nodeType.equals("artifact")) {
+      addToBuilder(builder, "id", (String) attributes.get("id"));
+      addToBuilder(builder, "title", node.getDocument().getTitle());
+      addToBuilder(builder, "type", (String)attributes.get("type"));
+    } else if (nodeType.equals("author")) {
+      addToBuilder(builder, "guid", (String) attributes.get("guid"));
+      addToBuilder(builder, "displayName", (String) attributes.get("displayName"));
+      addToBuilder(builder, "avatar", (String)attributes.get("avatar"));
+      addToBuilder(builder, "email", (String)attributes.get("email"));
+      addToBuilder(builder, "position", (String)attributes.get("position"));
     }
     addToBuilder(builder, "attributes", mapToJsonObject(attributes));
     addToBuilder(builder, "context", node.getContext());

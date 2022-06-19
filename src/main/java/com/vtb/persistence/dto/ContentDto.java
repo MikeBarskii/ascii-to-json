@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ContentDto {
+
   private String name;
   private String value;
   private TableDto table;

@@ -1,6 +1,7 @@
 package com.vtb.persistence.dto;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,8 +11,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RowDto {
-
+public class VersionDto {
   private int number;
-  private List<ValueDto> values;
+  @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+  private LocalDateTime dateTime;
 }
