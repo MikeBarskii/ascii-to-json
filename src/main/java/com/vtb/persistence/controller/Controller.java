@@ -9,22 +9,12 @@ import com.vtb.persistence.dto.TableDto;
 import com.vtb.persistence.dto.ValueDto;
 import io.github.swagger2markup.adoc.AsciidocConverter;
 import io.github.swagger2markup.adoc.ast.impl.BlockImpl;
-import io.github.swagger2markup.adoc.ast.impl.CellImpl;
-import io.github.swagger2markup.adoc.ast.impl.ColumnImpl;
 import io.github.swagger2markup.adoc.ast.impl.DocumentImpl;
-import io.github.swagger2markup.adoc.ast.impl.RowImpl;
-import io.github.swagger2markup.adoc.ast.impl.SectionImpl;
 import io.github.swagger2markup.adoc.ast.impl.TableImpl;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
-import org.asciidoctor.ast.Cell;
-import org.asciidoctor.ast.Column;
 import org.asciidoctor.ast.StructuralNode;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,8 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class TestController {
-
+public class Controller {
 
   @PostMapping
   public String create(@RequestBody ArtifactDto artifactDto) {
