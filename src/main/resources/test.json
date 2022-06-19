@@ -1,0 +1,142 @@
+{
+  "id": 1,
+  "title": "Паспорт стрима T4IT",
+  "type": "Паспорт стрима",
+  "author": {
+    "guid": "2bd9c23a-1665-4239-b77b-9bb2a16815e0",
+    "displayName": "Константинопольский К.К.",
+    "avatar": "/avatars/user.png",
+    "email": "aa@mail.ru",
+    "position": "Тестировщик"
+  },
+  "fragments": [
+    {
+      "id": 5,
+      "title": "1. Общая информация по стриму",
+      "order": 1,
+      "type": "group",
+      "children": [
+        {
+          "id" : 21,
+          "order": 1,
+          "content": {
+            "name": "Название стрима в КРОСС",
+            "value": "IT4IT"
+          },
+          "type": "text",
+          "source": "КРОСС",
+          "version": {
+            "number": "1",
+            "dateTime": "2022-03-23 14:41:44"
+          }
+        },
+        {
+          "id" : 22,
+          "order": 2,
+          "content": {
+            "name": "Назначение стрима",
+            "value": "Создать в Банке технологические возможности и потенциал, чтобы стать ключевым игроком в цифровом мире, путем создания в Банке передовой инфраструктуры и процессов производства"
+          },
+          "type": "text",
+          "version": {
+            "number": "2",
+            "dateTime": "2022-03-23 14:41:44"
+          }
+        },
+        {
+          "title": "Кураторы стрима",
+          "order": 3,
+          "content": null,
+          "type": "group",
+          "children": [
+            {
+              "order": 1,
+              "content": {
+                "name": "Куратор стрима",
+                "value": "Иванов Иван"
+              },
+              "type": "text",
+              "source": "КРОСС",
+              "version": {
+                "number": "2",
+                "dateTime": "2022-03-23 14:41:44"
+              }
+            },
+            {
+              "order": 2,
+              "content": {
+                "name": "ИТ-Куратор стрима",
+                "value": "Петров Петр"
+              },
+              "type": "text",
+              "source": "КРОСС",
+              "version": {
+                "number": "1",
+                "dateTime": "2022-03-23 14:41:44"
+              }
+            }
+          ]
+        },
+        {
+          "id": 25,
+          "title": "Ключевые результаты стрима:",
+          "order": 5,
+          "type": "table",
+          "content": {
+            "table": {
+              "columns": [
+                {
+                  "key": "type",
+                  "title": "Тип показателя",
+                  "valueType": "string"
+                },
+                {
+                  "key": "description",
+                  "title": "Описание",
+                  "valueType": "string"
+                },
+                {
+                  "key": "weight",
+                  "title": "Вес на 2021,%",
+                  "valueType": "integer"
+                },
+                {
+                  "key": "goals",
+                  "title": "Целевые значения на 2021",
+                  "valueType": "integer"
+                }
+              ],
+              "rows": [
+                {
+                  "number": 1,
+                  "values": [
+                    {
+                      "header": "type",
+                      "value": "Бизнес"
+                    },
+                    {
+                      "header": "description",
+                      "value": "Количество сделок в день"
+                    },
+                    {
+                      "header": "weight",
+                      "value": "10"
+                    },
+                    {
+                      "header": "goals",
+                      "value": "150000"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "version": {
+            "number": "2",
+            "dateTime": "2022-03-23 14:41:44"
+          }
+        }
+      ]
+    }
+  ]
+}
