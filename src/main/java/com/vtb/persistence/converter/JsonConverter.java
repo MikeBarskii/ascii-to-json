@@ -53,108 +53,19 @@ public class JsonConverter extends AbstractConverter<JsonObject> {
     if (node == null) {
       return null;
     }
+
     JsonObjectBuilder builder = Json.createObjectBuilder();
-    //addToBuilder(builder, "javaClass", node.getClass().getSimpleName());
     Map<String, Object> attributes = node.getAttributes();
-    String nodeType = (String) attributes.get("node_type");
-    if (nodeType.equals("artifact")) {
-      addToBuilder(builder, "id", (String) attributes.get("id"));
-      addToBuilder(builder, "title", node.getDocument().getTitle());
-      addToBuilder(builder, "type", (String)attributes.get("type"));
-    } else if (nodeType.equals("author")) {
-      addToBuilder(builder, "guid", (String) attributes.get("guid"));
-      addToBuilder(builder, "displayName", (String) attributes.get("displayName"));
-      addToBuilder(builder, "avatar", (String)attributes.get("avatar"));
-      addToBuilder(builder, "email", (String)attributes.get("email"));
-      addToBuilder(builder, "position", (String)attributes.get("position"));
-    }
-    addToBuilder(builder, "attributes", mapToJsonObject(attributes));
-    addToBuilder(builder, "context", node.getContext());
-    addToBuilder(builder, "id", node.getId());
-    addToBuilder(builder, "nodeName", node.getNodeName());
-    addToBuilder(builder, "reftext", node.getReftext());
-//    addToBuilder(builder, "role", node.getRole());
-//    addToBuilder(builder, "roles", listToJsonArray(node.getRoles()));
-    //node.getDocument() is not added to the JSON structure.
-    //node.getParent() is not added to the JSON structure.
+    addToBuilder(builder, "id", (String)attributes.get("id"));
+    addToBuilder(builder, "source", (String)attributes.get("source"));
+    addToBuilder(builder, "type", (String)attributes.get("type"));
+    addToBuilder(builder, "order", (String)attributes.get("order"));
 
-    if (node instanceof Cell) {
-      Cell cell = (Cell) node;
-      addToBuilder(builder, "colspan", cell.getColspan());
-      //addToBuilder(builder, "content", cell.getContent());
-      addToBuilder(builder, "horizontalAlignment", cell.getHorizontalAlignment().toString());
-      addToBuilder(builder, "innerDocument", convertToJsonObject(cell.getInnerDocument()));
-      addToBuilder(builder, "rowspan", cell.getRowspan());
-      addToBuilder(builder, "style", cell.getStyle());
-      addToBuilder(builder, "text", cell.getText());
-      addToBuilder(builder, "verticalAlignment", cell.getVerticalAlignment().toString());
-      //cell.getColumn() is not added to the JSON structure.
-    }
-    else if (node instanceof Column) {
-      Column column = (Column) node;
-      addToBuilder(builder, "columnNumber", column.getColumnNumber());
-      addToBuilder(builder, "horizontalAlignment", column.getHorizontalAlignment().toString());
-      addToBuilder(builder, "style", column.getStyle());
-      addToBuilder(builder, "verticalAlignment", column.getVerticalAlignment().toString());
-      addToBuilder(builder, "width", column.getWidth());
-      //column.getTable() is not added to the JSON structure.
-    }
-    else if (node instanceof PhraseNode) {
-      PhraseNode phraseNode = (PhraseNode) node;
-      addToBuilder(builder, "type", phraseNode.getType());
-      addToBuilder(builder, "text", phraseNode.getText());
-      addToBuilder(builder, "target", phraseNode.getTarget());
-    }
-    else if (node instanceof StructuralNode) {
-      StructuralNode structuralNode = (StructuralNode) node;
-      addToBuilder(builder, "level", structuralNode.getLevel());
-      addToBuilder(builder, "sourceLocation", convertCursorToJsonObject(structuralNode.getSourceLocation()));
-      addToBuilder(builder, "style", structuralNode.getStyle());
-      addToBuilder(builder, "title", structuralNode.getTitle());
-      addToBuilder(builder, "blocks", convertToJsonArray(structuralNode.getBlocks()));
-      //addToBuilder(builder, "content", structuralNode.getContent());
+    JsonObject version = mapToJsonObject(Map.of(
+        "number", attributes.get("versionnumber"),
+        "dateTime", attributes.get("versiontime")));
+    addToBuilder(builder, "version", version);
 
-      if (structuralNode instanceof Block) {
-        Block block = (Block) structuralNode;
-        addToBuilder(builder, "lines", listToJsonArray(block.getLines()));
-        addToBuilder(builder, "source", block.getSource());
-      }
-      else if (structuralNode instanceof DescriptionList) {
-        DescriptionList descriptionList = (DescriptionList) structuralNode;
-        addToBuilder(builder, "items", convertDescriptionListItemsToJsonArray(descriptionList));
-      }
-      else if (structuralNode instanceof Document) {
-        Document document = (Document) structuralNode;
-        addToBuilder(builder, "doctitle", document.getDoctitle());
-        addToBuilder(builder, "options", mapToJsonObject(document.getOptions()));
-        addToBuilder(builder, "structuredDoctitle", mapTitleToJsonObject(document.getStructuredDoctitle()));
-      }
-      else if (structuralNode instanceof org.asciidoctor.ast.List) {
-        org.asciidoctor.ast.List list = (org.asciidoctor.ast.List) structuralNode;
-        addToBuilder(builder, "items", convertToJsonArray(list.getItems()));
-      }
-      else if (structuralNode instanceof ListItem) {
-        ListItem listItem = (ListItem) structuralNode;
-        addToBuilder(builder, "marker", listItem.getMarker());
-        addToBuilder(builder, "text", listItem.getText());
-      }
-      else if (structuralNode instanceof Section) {
-        Section section = (Section) structuralNode;
-        addToBuilder(builder, "index", section.getIndex());
-        addToBuilder(builder, "number", section.getNumber());
-        addToBuilder(builder, "sectionName", section.getSectionName());
-        addToBuilder(builder, "special", section.isSpecial());
-      }
-      else if (structuralNode instanceof Table) {
-        Table table = (Table) structuralNode;
-        addToBuilder(builder, "frame", table.getFrame());
-        addToBuilder(builder, "grid", table.getGrid());
-        addToBuilder(builder, "body", convertRowsToJsonArray(table.getBody()));
-        addToBuilder(builder, "columns", convertToJsonArray(table.getColumns()));
-        addToBuilder(builder, "footer", convertRowsToJsonArray(table.getFooter()));
-        addToBuilder(builder, "header", convertRowsToJsonArray(table.getHeader()));
-      }
-    }
     return builder.build();
   }
 

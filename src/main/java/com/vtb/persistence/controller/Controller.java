@@ -16,6 +16,7 @@ import io.github.swagger2markup.adoc.ast.impl.TableImpl;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.asciidoctor.ast.Section;
@@ -103,11 +104,10 @@ public class Controller {
 
       return tableBlock;
     } else if (type.equals("text")) {
-      var attribute = "Атрибут: " + content.getName();
-      var value = "Значение атрибута: " + content.getValue();
+      String blockLine = content.getName() + ":" + content.getValue();
 
       var block = new BlockImpl(parent, "listing");
-      block.setLines(Arrays.asList(attribute, value));
+      block.setLines(List.of(blockLine));
       return block;
     }
 
